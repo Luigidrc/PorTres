@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Listino Prezzi Lezioni - PorTres Padel Pompei</title>
+    <style>
+        /* Palette colori basata sul logo */
+        :root {
+            --bg-dark: #0f1626;       
+            --bg-card: #1b2436;       
+            --accent-pink: #df3b67;   
+            --accent-blue: #49b3cd;   
+            --text-light: #ffffff;
+            --text-muted: #a0aec0;
+            --whatsapp-green: #25D366; 
+        }
+
+        /* Reset e ottimizzazioni mobile generiche */
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            margin: 0;
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 25px;
+            margin-top: 10px;
+        }
+
+        header h1 {
+            color: var(--accent-pink);
+            font-size: 2.2rem;
+            margin: 0 0 2px 0;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 800;
+        }
+
+        header p {
+            color: var(--accent-blue);
+            font-size: 1rem;
+            margin: 0;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1000px;
+        }
+
+        /* Sezione Professionalità e Struttura */
+        .intro-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        @media (min-width: 768px) {
+            .intro-grid {
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+                gap: 25px;
+            }
+        }
+
+        .intro-box-pro {
+            background-color: var(--bg-card);
+            border-top: 4px solid var(--accent-pink);
+            padding: 18px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .intro-box-pro h3 {
+            color: var(--accent-blue);
+            margin-top: 0;
+            margin-bottom: 12px;
+            font-size: 1.15rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .step-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .step-list li {
+            margin-bottom: 10px;
+            padding-left: 22px;
+            position: relative;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            line-height: 1.4;
+        }
+
+        .step-list li:last-child {
+            margin-bottom: 0;
+        }
+
+        .step-list li strong {
+            color: var(--text-light);
+        }
+
+        .step-list li::before {
+            content: "🎾";
+            position: absolute;
+            left: 0;
+            top: 1px;
+            font-size: 0.85rem;
+        }
+
+        .info-box {
+            background-color: var(--bg-card);
+            border-left: 4px solid var(--accent-blue);
+            padding: 12px 15px;
+            margin-bottom: 30px;
+            border-radius: 4px;
+        }
+
+        .info-box p {
+            margin: 6px 0;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            line-height: 1.4;
+        }
+
+        .section-title {
+            color: var(--accent-pink);
+            text-align: center;
+            margin-top: 10px;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 1.4rem;
+        }
+
+        /* Grid Principale Listino */
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+            margin-bottom: 35px;
+        }
+
+        @media (min-width: 480px) {
+            .grid {
+                grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+                gap: 20px;
+            }
+        }
+
+        .card {
+            background-color: var(--bg-card);
+            border-radius: 8px;
+            padding: 18px;
+            border: 1px solid #2d3748;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .card h2 {
+            color: var(--accent-blue);
+            margin-top: 0;
+            font-size: 1.2rem;
+            border-bottom: 2px solid #2d3748;
+            padding-bottom: 8px;
+            margin-bottom: 12px;
+        }
+
+        .price-section {
+            margin: 5px 0 10px 0;
+        }
+
+        .price-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 8px 0;
+        }
+
+        .time-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .price-tag {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--text-light);
+        }
+
+        .price-tag.pink {
+            color: var(--accent-pink);
+        }
+
+        .note {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            font-style: italic;
+            margin-top: 5px;
+            border-top: 1px dashed #2d3748;
+            padding-top: 8px;
+        }
+
+        .badge {
+            position: absolute;
+            top: 10px;
+            right: -35px;
+            background-color: var(--accent-pink);
+            color: white;
+            padding: 4px 35px;
+            transform: rotate(45deg);
+            font-size: 0.65rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .badge.blue {
+            background-color: var(--accent-blue);
+        }
+
+        /* Layout specifico per i pacchetti in Mobile */
+        .packages-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+            margin-bottom: 35px;
+        }
+
+        @media (min-width: 768px) {
+            .packages-grid {
+                grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+                gap: 25px;
+            }
+        }
+
+        /* STILI PULSANTE WHATSAPP MOBILE-OPTIMIZED */
+        .whatsapp-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--whatsapp-green);
+            color: white;
+            border-radius: 50px;
+            text-decoration: none;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            padding: 12px;
+            width: 56px;
+            height: 56px;
+            box-sizing: border-box;
+            animation: pulse 2s infinite;
+        }
+
+        .whatsapp-btn svg {
+            width: 28px;
+            height: 28px;
+            fill: white;
+        }
+
+        @media (min-width: 768px) {
+            .whatsapp-btn {
+                bottom: 30px;
+                right: 30px;
+                width: 60px;
+                height: 60px;
+            }
+            .whatsapp-btn svg {
+                width: 32px;
+                height: 32px;
+                transition: transform 0.3s ease;
+            }
+            .whatsapp-btn:hover {
+                width: 210px;
+                padding: 12px 20px;
+                justify-content: space-between;
+            }
+            .whatsapp-btn::after {
+                content: "Prenota Lezione";
+                white-space: nowrap;
+                font-weight: bold;
+                font-size: 0.95rem;
+                opacity: 0;
+                transform: translateX(10px);
+                transition: all 0.3s ease;
+                position: absolute;
+                left: 65px;
+            }
+            .whatsapp-btn:hover::after {
+                opacity: 1;
+                transform: translateX(0);
+            }
+            .whatsapp-btn:hover svg {
+                transform: translateX(-5px);
+            }
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.6); }
+            70% { box-shadow: 0 0 0 12px rgba(37, 211, 102, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            padding-bottom: 80px; /* Spazio extra vitale per non sovrapporsi al tasto WhatsApp su smartphone */
+            border-top: 1px solid #2d3748;
+            padding-top: 20px;
+            width: 100%;
+        }
+
+        footer p {
+            margin: 6px 0;
+            line-height: 1.4;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>PorTres</h1>
+        <p>PADEL POMPEI</p>
+    </header>
+
+    <div class="container">
+
+        <div class="intro-grid">
+            
+            <div class="intro-box-pro">
+                <h3>⏱️ Struttura della Lezione (1h)</h3>
+                <ul class="step-list">
+                    <li><strong>Riscaldamento & Attivazione (10 min):</strong> Preparazione atletica in campo e prevenzione infortuni.</li>
+                    <li><strong>Tecnica e Cesto (30 min):</strong> Ripetizione dei colpi d'attacco e difesa (Vandeja, Vibora, uscite di parete).</li>
+                    <li><strong>Tattica e Gioco (15 min):</strong> Schemi di gioco reali e posizionamento di coppia.</li>
+                    <li><strong>Feedback Finale (5 min):</strong> Analisi degli errori e obiettivi futuri.</li>
+                </ul>
+            </div>
+
+            <div class="intro-box-pro" style="border-top-color: var(--accent-blue);">
+                <h3>🏆 Perché scegliere PorTres Padel?</h3>
+                <ul class="step-list">
+                    <li><strong>Staff Tecnico Competente:</strong> Lezioni con Maestri Certificati e Istruttori qualificati di grande esperienza.</li>
+                    <li><strong>Tutti i Livelli:</strong> Dall'avviamento per principianti fino al perfezionamento per tornei.</li>
+                    <li><strong>Materiale Incluso:</strong> Palline nuove/semi-nuove e attrezzatura didattica in campo.</li>
+                    <li><strong>Noleggio Racchette:</strong> Se non hai la pala, te la forniamo noi.</li>
+                </ul>
+            </div>
+
+        </div>
+
+        <div class="info-box">
+            <p><strong>🕒 Fasce Orarie:</strong> Tariffe Pomeridiane (dalle 16:00 alle 19:00) | Tariffe Serali (dalle 19:00 in poi).</p>
+            <p><strong>⚠️ Scadenza Pacchetti:</strong> Tutti i carnet da 10 lezioni hanno una validità di 2 mesi dalla data di acquisto.</p>
+        </div>
+
+        <h2 class="section-title">🎯 Tariffe Lezioni Singole</h2>
+        <div class="grid">
+            
+            <div class="card">
+                <h2>Lezione Singola</h2>
+                <div class="price-section">
+                    <div class="price-row">
+                        <span class="time-label">Pomeriggio (16:00 - 19:00)</span>
+                        <span class="price-tag">25€</span>
+                    </div>
+                    <div class="price-row">
+                        <span class="time-label">Sera (dalle 19:00)</span>
+                        <span class="price-tag pink">35€</span>
+                    </div>
+                </div>
+                <div class="note">1 Partecipante</div>
+            </div>
+
+            <div class="card">
+                <h2>Lezione in Coppia</h2>
+                <div class="price-section">
+                    <div class="price-row">
+                        <span class="time-label">Pomeriggio (16:00 - 19:00)</span>
+                        <span class="price-tag">35€</span>
+                    </div>
+                    <div class="price-row">
+                        <span class="time-label">Sera (dalle 19:00)</span>
+                        <span class="price-tag pink">50€</span>
+                    </div>
+                </div>
+                <div class="note">Prezzo totale della coppia</div>
+            </div>
+
+            <div class="card">
+                <h2>Gruppo 3 Persone</h2>
+                <div class="price-section">
+                    <div class="price-row">
+                        <span class="time-label">Pomeriggio (16:00 - 19:00)</span>
+                        <span class="price-tag">45€</span>
+                    </div>
+                    <div class="price-row">
+                        <span class="time-label">Sera (dalle 19:00)</span>
+                        <span class="price-tag pink">60€</span>
+                    </div>
+                </div>
+                <div class="note">Prezzo totale del gruppo</div>
+            </div>
+
+            <div class="card">
+                <h2>Gruppo 4 Persone</h2>
+                <div class="price-section">
+                    <div class="price-row">
+                        <span class="time-label">Pomeriggio (16:00 - 19:00)</span>
+                        <span class="price-tag">55€</span>
+                    </div>
+                    <div class="price-row">
+                        <span class="time-label">Sera (dalle 19:00)</span>
+                        <span class="price-tag pink">70€</span>
+                    </div>
+                </div>
+                <div class="note">Prezzo totale del gruppo</div>
+            </div>
+
+        </div>
+
+        <h2 class="section-title">🎒 Pacchetti Pomeridiani</h2>
+        <p style="text-align: center; color: var(--text-muted); margin-top: -15px; margin-bottom: 25px; font-size: 0.85rem; font-style: italic; padding: 0 10px;">
+            Utilizzabili esclusivamente nella fascia oraria 16:00 - 19:00 • Validità 2 mesi
+        </p>
+        
+        <div class="packages-grid">
+            
+            <div class="card" style="border-left: 5px solid var(--accent-blue);">
+                <div class="badge blue">10 LEZ.</div>
+                <h2>Carnet Singolo Pomeriggio</h2>
+                <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px;">10 lezioni individuali per accelerare la tua crescita tecnica prima del turno serale.</p>
+                <div class="price-row">
+                    <span style="font-weight: bold; font-size: 0.9rem;">Prezzo Pacchetto:</span>
+                    <span class="price-tag" style="font-size: 1.5rem; color: var(--accent-blue);">180€</span>
+                </div>
+                <div class="note">Risparmi 70€ rispetto alle lezioni singole!</div>
+            </div>
+            
+            <div class="card" style="border-left: 5px solid var(--accent-blue);">
+                <div class="badge blue">10 LEZ.</div>
+                <h2>Carnet Coppia Pomeriggio</h2>
+                <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px;">10 lezioni per la coppia. Perfetto per affinare la tattica di gioco insieme.</p>
+                <div class="price-row">
+                    <span style="font-weight: bold; font-size: 0.9rem;">Prezzo a Persona:</span>
+                    <span class="price-tag" style="font-size: 1.5rem; color: var(--accent-blue);">140€ <span style="font-size: 0.8rem; color: var(--text-muted);">/ cad.</span></span>
+                </div>
+                <div class="note">Totale pacchetto: 280€ per la coppia</div>
+            </div>
+
+        </div>
+
+        <h2 class="section-title">🌙 Pacchetti Serali</h2>
+        <p style="text-align: center; color: var(--text-muted); margin-top: -15px; margin-bottom: 25px; font-size: 0.85rem; font-style: italic; padding: 0 10px;">
+            Utilizzabili nella fascia serale dalle ore 19:00 in poi • Validità 2 mesi
+        </p>
+
+        <div class="packages-grid">
+            
+            <div class="card" style="border-left: 5px solid var(--accent-pink);">
+                <div class="badge">10 LEZ.</div>
+                <h2>Carnet Singolo Serale</h2>
+                <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px;">10 lezioni individuali negli orari di punta post-lavoro.</p>
+                <div class="price-row">
+                    <span style="font-weight: bold; font-size: 0.9rem;">Prezzo Pacchetto:</span>
+                    <span class="price-tag pink" style="font-size: 1.5rem;">240€</span>
+                </div>
+                <div class="note">Risparmi 110€ rispetto alla tariffa singola serale!</div>
+            </div>
+            
+            <div class="card" style="border-left: 5px solid var(--accent-pink);">
+                <div class="badge">10 LEZ.</div>
+                <h2>Carnet Coppia Serale</h2>
+                <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px;">10 lezioni di coppia in orario serale per preparare i vostri tornei.</p>
+                <div class="price-row">
+                    <span style="font-weight: bold; font-size: 0.9rem;">Prezzo Pacchetto:</span>
+                    <span class="price-tag pink" style="font-size: 1.5rem;">400€ <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: normal;">(totale)</span></span>
+                </div>
+                <div class="note">Equivale a 200€ a persona invece di 250€</div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <a href="https://wa.me/393317058261?text=Ciao%20PorTres%20Padel!%20Vorrei%20avere%20informazioni%20per%20prenotare%20delle%20lezioni." class="whatsapp-btn" target="_blank" rel="noopener noreferrer">
+        <svg viewBox="0 0 32 32">
+            <path d="M16 2a13 13 0 0 0-11.24 19.62l-1.63 6 6.14-1.61A13 13 0 1 0 16 2zm6.72 18.52c-.29.82-1.44 1.61-2.31 1.73-.6.08-1.38.12-3.86-.88A14 14 0 0 1 11.24 16c-.6-.79-1-1.74-1-2.73 0-1.07.56-1.61.81-1.89.2-.23.54-.34.86-.34h.26c.23 0 .46.01.66.44.25.59.86 2.11.94 2.27.08.16.14.35.03.56-.11.21-.25.35-.41.52l-.52.54c-.16.18-.34.38-.13.73a10.23 10.23 0 0 0 1.87 2.32 9.24 9.24 0 0 0 2.7 1.67c.35.17.56.14.76-.09s.87-1 1.1-1.35c.23-.35.46-.29.77-.18l2.45 1.16c.32.14.53.23.61.37.08.14.08.82-.21 1.64z"/>
+        </svg>
+    </a>
+
+    <footer>
+        <p><strong>PorTres Padel Pompei</strong></p>
+        <p>📍 Via Monsignor Luigi di Liegro, Pompei (NA) - 80045</p>
+        <p style="color: var(--text-muted); font-size: 0.75rem; margin-top: 12px;">&copy; 2026 - Tutti i diritti riservati.</p>
+    </footer>
+
+</body>
+</html>
